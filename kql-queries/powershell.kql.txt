@@ -1,0 +1,9 @@
+// KQL Query: Detect Suspicious PowerShell Commands
+// Author: Ahmad Fahim Naweed
+// Description: Detects execution of PowerShell commands involving 'Invoke-WebRequest', which may indicate malicious download attempts.
+
+SecurityEvent
+| where EventID == 4688
+| where CommandLine contains "Invoke-WebRequest"
+| project TimeGenerated, Computer, Account, NewProcessName, CommandLine
+| sort by TimeGenerated desc
